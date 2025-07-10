@@ -17,6 +17,15 @@ import Profile from "./pages/Profile";
 import Store from "./pages/Store";
 import Settings from "./pages/Settings";
 import Layout from "./components/Layout";
+import AdminLogin from "./pages/AdminLogin";
+import AdminLayout from "./components/AdminLayout";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminShlokas from "./pages/AdminShlokas";
+import AdminLanguages from "./pages/AdminLanguages";
+import AdminStore from "./pages/AdminStore";
+import AdminNotifications from "./pages/AdminNotifications";
+import AdminUsers from "./pages/AdminUsers";
+import AdminTheme from "./pages/AdminTheme";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +48,16 @@ const App = () => (
               <Route path="profile" element={<Profile />} />
               <Route path="store" element={<Store />} />
               <Route path="settings" element={<Settings />} />
+            </Route>
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="shlokas" element={<AdminShlokas />} />
+              <Route path="languages" element={<AdminLanguages />} />
+              <Route path="store" element={<AdminStore />} />
+              <Route path="notifications" element={<AdminNotifications />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="theme" element={<AdminTheme />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
