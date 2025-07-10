@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Play, Pause, Heart, Share2, Globe } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -9,6 +9,16 @@ const DailyShloka = () => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('english');
   const { toast } = useToast();
+  const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  // Cleanup speech synthesis when component unmounts
+  useEffect(() => {
+    return () => {
+      if (speechRef.current) {
+        speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
   const shloka = {
     sanskrit: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि।।",
@@ -33,11 +43,69 @@ const DailyShloka = () => {
   ];
 
   const handlePlayPause = () => {
-    setIsPlaying(!isPlaying);
-    toast({
-      title: isPlaying ? "Audio paused" : "Playing Sanskrit audio",
-      description: isPlaying ? "Sanskrit recitation paused" : "Listen to the beautiful pronunciation",
-    });
+    if (!('speechSynthesis' in window)) {
+      toast({
+        title: "Audio not supported",
+        description: "Your browser doesn't support text-to-speech",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (isPlaying) {
+      // Pause/Stop the current speech
+      speechSynthesis.cancel();
+      setIsPlaying(false);
+      toast({
+        title: "Audio paused",
+        description: "Sanskrit recitation paused",
+      });
+    } else {
+      // Start playing
+      const utterance = new SpeechSynthesisUtterance(shloka.sanskrit);
+      speechRef.current = utterance;
+      
+      // Configure the speech
+      utterance.rate = 0.7; // Slower rate for Sanskrit
+      utterance.pitch = 1;
+      utterance.volume = 1;
+      
+      // Try to find a Hindi voice for better Sanskrit pronunciation
+      const voices = speechSynthesis.getVoices();
+      const hindiVoice = voices.find(voice => 
+        voice.lang.includes('hi') || voice.lang.includes('sa') || voice.name.toLowerCase().includes('hindi')
+      );
+      
+      if (hindiVoice) {
+        utterance.voice = hindiVoice;
+      }
+
+      // Event handlers
+      utterance.onstart = () => {
+        setIsPlaying(true);
+        toast({
+          title: "Playing Sanskrit audio",
+          description: "Listen to the beautiful pronunciation",
+        });
+      };
+
+      utterance.onend = () => {
+        setIsPlaying(false);
+      };
+
+      utterance.onerror = (event) => {
+        setIsPlaying(false);
+        console.error('Speech synthesis error:', event);
+        toast({
+          title: "Audio error",
+          description: "There was an error playing the audio",
+          variant: "destructive",
+        });
+      };
+
+      // Start speaking
+      speechSynthesis.speak(utterance);
+    }
   };
 
   const handleBookmark = () => {
@@ -83,6 +151,7 @@ const DailyShloka = () => {
           <Button
             onClick={handlePlayPause}
             className={`mr-4 ${isPlaying ? 'bg-orange-600' : 'bg-orange-500'} hover:bg-orange-600 text-white`}
+            disabled={!('speechSynthesis' in window)}
           >
             {isPlaying ? <Pause className="w-5 h-5 mr-2" /> : <Play className="w-5 h-5 mr-2" />}
             {isPlaying ? 'Pause' : 'Play Sanskrit'}
