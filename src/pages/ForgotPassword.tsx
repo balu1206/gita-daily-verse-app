@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Lotus, Mail } from "lucide-react";
+import { ArrowLeft, Flower2, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const ForgotPassword = () => {
@@ -45,7 +44,7 @@ const ForgotPassword = () => {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <div className="w-16 h-16 mx-auto bg-gradient-to-br from-orange-400 to-amber-500 rounded-full flex items-center justify-center shadow-lg mb-4">
-              {isSubmitted ? <Mail className="w-8 h-8 text-white" /> : <Lotus className="w-8 h-8 text-white" />}
+              {isSubmitted ? <Mail className="w-8 h-8 text-white" /> : <Flower2 className="w-8 h-8 text-white" />}
             </div>
             <h1 className="text-2xl font-bold text-orange-800 mb-2">
               {isSubmitted ? "Check Your Email" : "Reset Password"}

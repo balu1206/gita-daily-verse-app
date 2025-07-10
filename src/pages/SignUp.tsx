@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Lotus, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Flower2, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const SignUp = () => {
@@ -60,7 +60,7 @@ const SignUp = () => {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <div className="w-16 h-16 mx-auto bg-gradient-to-br from-orange-400 to-amber-500 rounded-full flex items-center justify-center shadow-lg mb-4">
-              <Lotus className="w-8 h-8 text-white" />
+              <Flower2 className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-orange-800 mb-2">Join Our Community</h1>
             <p className="text-orange-600">Start your spiritual journey today</p>

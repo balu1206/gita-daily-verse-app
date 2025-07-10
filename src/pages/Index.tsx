@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Lotus, Sun, BookOpen } from "lucide-react";
+import { Flower2, Sun, BookOpen } from "lucide-react";
 
 const Index = () => {
   return (
@@ -10,7 +10,7 @@ const Index = () => {
         {/* App Logo */}
         <div className="mb-8 relative">
           <div className="w-24 h-24 mx-auto bg-gradient-to-br from-orange-400 to-amber-500 rounded-full flex items-center justify-center shadow-lg">
-            <Lotus className="w-12 h-12 text-white" />
+            <Flower2 className="w-12 h-12 text-white" />
           </div>
           <Sun className="w-8 h-8 text-orange-400 absolute -top-2 -right-2 animate-pulse" />
         </div>
@@ -30,7 +30,7 @@ const Index = () => {
             <p className="text-sm text-orange-700">Daily Verses</p>
           </div>
           <div className="text-center">
-            <Lotus className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+            <Flower2 className="w-8 h-8 text-orange-500 mx-auto mb-2" />
             <p className="text-sm text-orange-700">Regional Languages</p>
           </div>
           <div className="text-center">
